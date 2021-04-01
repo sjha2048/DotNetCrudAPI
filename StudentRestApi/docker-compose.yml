@@ -1,0 +1,23 @@
+version: '3'
+services: 
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment: 
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Docker2021"
+      MSSQL_PID: Express
+    ports:
+      - "1443:1443"
+  
+  student-rest:
+    build: .
+    environment: 
+      DatabaseServer: "mssql-server"
+      DatabasePort: "1443"
+      DatabaseUser: "SA"
+      DatabasePassword: "Docker2021"
+      DatabaseName: "studentsDb"
+    port:
+      - "8080:80"
+    
+
